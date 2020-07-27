@@ -1,12 +1,13 @@
 package com.pgotuzzo.mvpreddit.model.data
 
-import com.pgotuzzo.mvpreddit.model.data.preferences.android.Key
+import com.pgotuzzo.mvpreddit.model.data.post.DefaultPostRepository
+import com.pgotuzzo.mvpreddit.model.data.post.reddit.RedditService
+import com.pgotuzzo.mvpreddit.model.data.post.reddit.kojo.RedditPost
+import com.pgotuzzo.mvpreddit.model.data.post.reddit.kojo.RedditPostData
+import com.pgotuzzo.mvpreddit.model.data.post.reddit.kojo.RedditPostList
+import com.pgotuzzo.mvpreddit.model.data.post.reddit.kojo.RedditPostListData
 import com.pgotuzzo.mvpreddit.model.data.preferences.Preferences
-import com.pgotuzzo.mvpreddit.model.data.reddit.kojo.RedditPost
-import com.pgotuzzo.mvpreddit.model.data.reddit.kojo.RedditPostData
-import com.pgotuzzo.mvpreddit.model.data.reddit.kojo.RedditPostList
-import com.pgotuzzo.mvpreddit.model.data.reddit.kojo.RedditPostListData
-import com.pgotuzzo.mvpreddit.model.data.reddit.RedditService
+import com.pgotuzzo.mvpreddit.model.data.preferences.android.Key
 import com.pgotuzzo.mvpreddit.util.TimeUtils.SEC_IN_MILLIS
 import io.mockk.*
 import io.mockk.impl.annotations.MockK
@@ -29,7 +30,11 @@ class DefaultPostRepositoryTest {
     @Before
     fun initRepository() {
         MockKAnnotations.init(this)
-        repository = DefaultPostRepository(preferences, redditService)
+        repository =
+            DefaultPostRepository(
+                preferences,
+                redditService
+            )
     }
 
     @Test
@@ -152,6 +157,7 @@ class DefaultPostRepositoryTest {
                 title = "I'm a title",
                 createdUtcSecs = randomCreationUTCinSec(),
                 thumbnail = null,
+                url = null,
                 commentsCount = random.nextLong()
             )
         )

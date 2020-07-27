@@ -31,7 +31,6 @@ class PostDetailsFragment : Fragment() {
         fun getInstance(post: Post): PostDetailsFragment =
             PostDetailsFragment().apply {
                 arguments = Bundle().apply { putParcelable(ARGS_POST, post) }
-
             }
     }
 

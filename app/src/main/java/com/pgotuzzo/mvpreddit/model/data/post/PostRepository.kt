@@ -1,4 +1,4 @@
-package com.pgotuzzo.mvpreddit.model.data
+package com.pgotuzzo.mvpreddit.model.data.post
 
 import com.pgotuzzo.mvpreddit.model.entity.Post
 

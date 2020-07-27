@@ -1,14 +1,15 @@
-package com.pgotuzzo.mvpreddit.presentation.feed.listing
+package com.pgotuzzo.mvpreddit.presentation.feed.listing.recycler
 
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.pgotuzzo.mvpreddit.R
 import com.pgotuzzo.mvpreddit.model.entity.Post
-import com.pgotuzzo.mvpreddit.presentation.feed.listing.RecyclerAdapter.PostViewHolder
+import com.pgotuzzo.mvpreddit.presentation.feed.listing.recycler.RecyclerAdapter.PostViewHolder
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -104,7 +105,20 @@ class RecyclerAdapter(
                 R.string.feed_post_comments,
                 post.commentsCount.toString()
             )
-            itemView.setOnClickListener { onPostSelected(post) }
+
+            val colorId = if (post.isRead) R.color.primaryLightColor else R.color.primaryColor
+            itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, colorId))
+
+            itemView.setOnClickListener {
+                post.isRead = true
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(
+                        itemView.context,
+                        R.color.primaryLightColor
+                    )
+                )
+                onPostSelected(post)
+            }
         }
     }
 }

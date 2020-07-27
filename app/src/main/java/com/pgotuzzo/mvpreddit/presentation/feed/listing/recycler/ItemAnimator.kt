@@ -1,4 +1,4 @@
-package com.pgotuzzo.mvpreddit.presentation.feed.listing
+package com.pgotuzzo.mvpreddit.presentation.feed.listing.recycler
 
 import android.animation.ObjectAnimator
 import android.view.View

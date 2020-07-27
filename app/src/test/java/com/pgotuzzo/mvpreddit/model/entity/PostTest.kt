@@ -43,6 +43,7 @@ class PostTest {
             author = "me",
             title = "I'm a title",
             thumbnailUrl = null,
+            imageUrl = null,
             commentsCount = 0,
             isRead = false,
             isDeleted = false

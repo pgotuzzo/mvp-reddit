@@ -1,4 +1,4 @@
-package com.pgotuzzo.mvpreddit.presentation.feed.listing
+package com.pgotuzzo.mvpreddit.presentation.feed.listing.recycler
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView

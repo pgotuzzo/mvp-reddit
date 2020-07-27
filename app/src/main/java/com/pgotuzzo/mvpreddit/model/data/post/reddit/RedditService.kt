@@ -1,6 +1,6 @@
-package com.pgotuzzo.mvpreddit.model.data.reddit
+package com.pgotuzzo.mvpreddit.model.data.post.reddit
 
-import com.pgotuzzo.mvpreddit.model.data.reddit.kojo.RedditPostList
+import com.pgotuzzo.mvpreddit.model.data.post.reddit.kojo.RedditPostList
 import retrofit2.http.GET
 import retrofit2.http.Query
 

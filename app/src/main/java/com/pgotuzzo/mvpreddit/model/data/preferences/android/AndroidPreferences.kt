@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.pgotuzzo.mvpreddit.model.data.preferences.Preferences
 
-class AndroidPreferences(context: Context) :
-    Preferences {
+class AndroidPreferences(context: Context) : Preferences {
     companion object {
         private const val PREFERENCES_NAME = "com.pgotuzzo.mvpreddit.SHARED_PREFERENCES"
     }

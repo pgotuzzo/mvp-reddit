@@ -1,4 +1,4 @@
-package com.pgotuzzo.mvpreddit.model.data.reddit.kojo
+package com.pgotuzzo.mvpreddit.model.data.post.reddit.kojo
 
 import com.google.gson.annotations.SerializedName
 

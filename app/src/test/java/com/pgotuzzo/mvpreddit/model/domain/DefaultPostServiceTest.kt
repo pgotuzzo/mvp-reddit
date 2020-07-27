@@ -1,7 +1,7 @@
 package com.pgotuzzo.mvpreddit.model.domain
 
 import android.text.format.DateUtils.SECOND_IN_MILLIS
-import com.pgotuzzo.mvpreddit.model.data.PostRepository
+import com.pgotuzzo.mvpreddit.model.data.post.PostRepository
 import com.pgotuzzo.mvpreddit.model.entity.Post
 import com.pgotuzzo.mvpreddit.util.TimeUtils.HOUR_IN_MILLIS
 import com.pgotuzzo.mvpreddit.util.TimeUtils.MIN_IN_MILLIS
@@ -78,6 +78,7 @@ class DefaultPostServiceTest {
         val size = random.nextInt(1, topPosts.size)
         coEvery { repository.getTopPosts(size) } returns topPosts.subList(0, size)
         coEvery { repository.getDeletedPostsIds() } returns emptyList()
+        coEvery { repository.getReadPostsIds() } returns emptyList()
 
         Assert.assertEquals(size, service.getTopPosts(size).size)
     }
@@ -90,6 +91,7 @@ class DefaultPostServiceTest {
         val additionalPosts = listOf(createPost(100, "extra"))
         coEvery { repository.getTopPosts(size) } returns topPostRandom
         coEvery { repository.getDeletedPostsIds() } returns listOf(deleted)
+        coEvery { repository.getReadPostsIds() } returns emptyList()
         coEvery { repository.getMorePosts(topPostRandom.last().id, 1) } returns additionalPosts
 
         val result = service.getTopPosts(size)
@@ -119,6 +121,7 @@ class DefaultPostServiceTest {
             author = "me",
             title = "I'm a title",
             thumbnailUrl = null,
+            imageUrl = null,
             commentsCount = 0,
             isRead = false,
             isDeleted = false

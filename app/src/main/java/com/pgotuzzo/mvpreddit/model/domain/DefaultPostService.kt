@@ -1,6 +1,6 @@
 package com.pgotuzzo.mvpreddit.model.domain
 
-import com.pgotuzzo.mvpreddit.model.data.PostRepository
+import com.pgotuzzo.mvpreddit.model.data.post.PostRepository
 import com.pgotuzzo.mvpreddit.model.entity.Post
 import com.pgotuzzo.mvpreddit.util.log.Logger
 
@@ -27,9 +27,13 @@ class DefaultPostService(
 
     override suspend fun getTopPosts(amount: Int): List<Post> {
         val deletedPosts = postRepository.getDeletedPostsIds()
+        val readPosts = postRepository.getReadPostsIds()
         val topPosts = postRepository.getTopPosts(amount)
         val filtered = topPosts.filter { !deletedPosts.contains(it.id) }
-        return getPosts(topPosts.last().id, amount, filtered, deletedPosts)
+        return getPosts(topPosts.last().id, amount, filtered, deletedPosts).map {
+            if (readPosts.contains(it.id)) it.isRead = true
+            it
+        }
     }
 
     override suspend fun markAsRead(postId: String, isRead: Boolean) {

@@ -1,9 +1,10 @@
-package com.pgotuzzo.mvpreddit.model.data
+package com.pgotuzzo.mvpreddit.model.data.post
 
-import com.pgotuzzo.mvpreddit.model.data.preferences.android.Key
+import com.pgotuzzo.mvpreddit.model.data.post.reddit.RedditService
 import com.pgotuzzo.mvpreddit.model.data.preferences.Preferences
-import com.pgotuzzo.mvpreddit.model.data.reddit.RedditService
+import com.pgotuzzo.mvpreddit.model.data.preferences.android.Key
 import com.pgotuzzo.mvpreddit.model.entity.Post
+import kotlinx.coroutines.Dispatchers
 
 class DefaultPostRepository(
     private val preferences: Preferences,
@@ -17,7 +18,12 @@ class DefaultPostRepository(
             emptyList()
 
     override suspend fun getMorePosts(afterPostId: String, amount: Int): List<Post> =
-        RedditMapper.toPostList(redditService.getPosts(amount, afterPostId))
+        RedditMapper.toPostList(
+            with(Dispatchers.IO) {
+                redditService.getPosts(amount, afterPostId)
+            }
+
+        )
 
     override suspend fun getReadPostsIds(): List<String> =
         if (preferences.exists(Key.POST_READ_LIST))
@@ -27,7 +33,9 @@ class DefaultPostRepository(
 
     override suspend fun getTopPosts(amount: Int): List<Post> =
         RedditMapper.toPostList(
-            redditService.getPosts(amount, null)
+            with(Dispatchers.IO) {
+                redditService.getPosts(amount, null)
+            }
         )
 
     override suspend fun saveDeletedPostsIds(postsIds: List<String>) {
