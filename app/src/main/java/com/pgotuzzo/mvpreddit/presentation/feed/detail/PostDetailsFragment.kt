@@ -16,12 +16,8 @@ import kotlinx.android.synthetic.main.frag_feed_post_details.tvCommentsCount
 import kotlinx.android.synthetic.main.frag_feed_post_details.tvCreationTime
 import kotlinx.android.synthetic.main.frag_feed_post_details.tvTitle
 
-/*
- * TODO(
- *   01. Documentation
- *   02. Dagger Injection
- *   03. Logs
- *  )
+/**
+ * Show posts details, incrementing the size of the image attached to the post if there is any
  */
 class PostDetailsFragment : Fragment() {
 

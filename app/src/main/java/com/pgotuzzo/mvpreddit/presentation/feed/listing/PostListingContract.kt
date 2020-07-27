@@ -1,10 +1,16 @@
 package com.pgotuzzo.mvpreddit.presentation.feed.listing
 
+import android.os.Parcelable
 import com.pgotuzzo.mvpreddit.model.entity.Post
 import com.pgotuzzo.mvpreddit.presentation.MvpPresenter
 import com.pgotuzzo.mvpreddit.presentation.MvpView
 
 interface PostListingContract {
+
+    interface State : Parcelable {
+        val posts: List<Post>
+    }
+
     interface View : MvpView {
         /**
          * Adds new posts to the existing list

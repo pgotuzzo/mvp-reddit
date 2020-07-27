@@ -2,6 +2,7 @@ package com.pgotuzzo.mvpreddit.presentation.feed.listing.di
 
 import android.app.Activity
 import com.pgotuzzo.mvpreddit.di.scope.PerFragment
+import com.pgotuzzo.mvpreddit.model.data.PresenterStateRepository
 import com.pgotuzzo.mvpreddit.model.domain.PostService
 import com.pgotuzzo.mvpreddit.presentation.feed.listing.PostListingContract
 import com.pgotuzzo.mvpreddit.presentation.feed.listing.PostListingPresenter
@@ -18,7 +19,7 @@ class PostListingModule(private val activity: Activity) {
         logger: Logger,
         postService: PostService
     ): PostListingContract.Presenter {
-//        val repo = PresenterStateRepository(activity, "POST_LISTING_PRESENTER")
-        return PostListingPresenter(logger, postService)
+        val repo = PresenterStateRepository(activity, "POST_LISTING_PRESENTER")
+        return PostListingPresenter(logger, repo, postService)
     }
 }

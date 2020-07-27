@@ -8,7 +8,8 @@ import com.pgotuzzo.mvpreddit.presentation.feed.FeedActivity.FragmentTag.POST_DE
 import com.pgotuzzo.mvpreddit.presentation.feed.FeedActivity.FragmentTag.POST_LISTING
 import com.pgotuzzo.mvpreddit.presentation.feed.detail.PostDetailsFragment
 import com.pgotuzzo.mvpreddit.presentation.feed.listing.PostListingFragment
-import kotlinx.android.synthetic.main.act_feed.flRoot
+import kotlinx.android.synthetic.main.act_feed.flDeatils
+import kotlinx.android.synthetic.main.act_feed.flListing
 
 class FeedActivity : AppCompatActivity() {
 
@@ -20,14 +21,16 @@ class FeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_feed)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        showListing()
+        if (savedInstanceState == null) {
+            showListing()
+        }
     }
 
     fun showDetails(post: Post) {
+        if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+        }
+        val fragment = PostDetailsFragment.getInstance(post).apply { retainInstance = true }
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(
@@ -36,7 +39,7 @@ class FeedActivity : AppCompatActivity() {
                 R.animator.frament_enter,
                 R.animator.frament_exit
             )
-            .add(flRoot.id, PostDetailsFragment.getInstance(post), POST_DETAIL)
+            .add(flDeatils.id, fragment, POST_DETAIL)
             .addToBackStack(null)
             .commit()
     }
@@ -44,7 +47,7 @@ class FeedActivity : AppCompatActivity() {
     private fun showListing() {
         supportFragmentManager
             .beginTransaction()
-            .add(flRoot.id, PostListingFragment.getInstance(), POST_LISTING)
+            .add(flListing.id, PostListingFragment.getInstance(), POST_LISTING)
             .commit()
     }
 }

@@ -1,6 +1,6 @@
 package com.pgotuzzo.mvpreddit.presentation.feed.listing
 
-import android.os.Parcelable
+import com.pgotuzzo.mvpreddit.model.data.ActivityStateRepository
 import com.pgotuzzo.mvpreddit.model.domain.PostService
 import com.pgotuzzo.mvpreddit.model.entity.Post
 import com.pgotuzzo.mvpreddit.presentation.base.BasePresenter
@@ -14,9 +14,13 @@ import kotlinx.coroutines.launch
 
 class PostListingPresenter(
     logger: Logger,
+    repo: ActivityStateRepository,
     private val postService: PostService
-) : BasePresenter<View, Parcelable>(LoggerHolder(logger, Tag.CLASS)),
-    Presenter {
+) : BasePresenter<View, PostListingState>(
+    LoggerHolder(logger, Tag.CLASS),
+    repo,
+    PostListingState.INITIAL_STATE
+), Presenter {
 
     companion object {
         private const val PAGE_SIZE = 20
@@ -30,19 +34,24 @@ class PostListingPresenter(
     private var loading: Boolean = false
 
     // BasePresenter implementation - BEGIN
-    override fun applyState(state: Parcelable?) {
-        // No op - Will add
+    override fun applyState(state: PostListingState?) {
+        state?.also { posts = it.posts }
     }
 
-    override fun getCurrentState(): Parcelable? = null
+    override fun getCurrentState(): PostListingState? = PostListingState(posts)
     // BasePresenter implementation - END
 
     override fun onInit() {
-        loadPosts()
+        logger.d(Tag.CLASS, "Initialize")
+        if (posts.isEmpty()) {
+            loadPosts()
+        } else {
+            view?.showPosts(posts)
+        }
     }
 
     override fun onPostsRead(post: Post) {
-        logger.d(Tag.CLASS, "Post read | Post: $post")
+        logger.d(Tag.CLASS, "Post read | Post: ${post.id}")
         val job = CoroutineScope(Dispatchers.Main).launch {
             postService.markAsRead(post.id, true)
         }
