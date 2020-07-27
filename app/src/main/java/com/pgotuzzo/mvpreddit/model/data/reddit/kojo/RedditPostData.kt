@@ -14,5 +14,7 @@ data class RedditPostData(
     @SerializedName("thumbnail")
     val thumbnail: String?,
     @SerializedName("num_comments")
-    val commentsCount: Long
+    val commentsCount: Long,
+    @SerializedName("url")
+    val url: String?
 )
